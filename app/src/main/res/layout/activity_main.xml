@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:defaultNavHost="true"
-        app:navGraph="@navigation/bottom_nav" />
+        app:navGraph="@navigation/bottom_nav"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavView"
@@ -24,8 +24,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
         style="@style/Widget.MaterialComponents.BottomNavigationView"
-        app:itemIconTint="@color/red_dark"
-        app:itemTextColor="@color/red_dark"
+        app:itemIconTint="@drawable/tab_color"
+        app:itemTextColor="@drawable/tab_color"
         app:menu="@menu/bottom_nav_menu"/>
 
 

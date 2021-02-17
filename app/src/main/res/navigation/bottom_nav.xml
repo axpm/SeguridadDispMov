@@ -9,17 +9,34 @@
         android:id="@+id/favRecipesFragment"
         android:name="com.uc3m.searchyourrecipe.views.FavRecipesFragment"
         android:label="Favorites Recipes"
-        tools:layout="@layout/fragment_shopping_list"/>
+        tools:layout="@layout/fragment_shopping_list">
+        <action
+            android:id="@+id/action_favRecipesFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.uc3m.searchyourrecipe.views.SearchFragment"
         android:label="Search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_shoppingListFragment"
+            app:destination="@id/shoppingListFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/shoppingListFragment"
         android:name="com.uc3m.searchyourrecipe.views.ShoppingListFragment"
         android:label="Shopping List"
-        tools:layout="@layout/fragment_shopping_list" />
+        tools:layout="@layout/fragment_shopping_list" >
+        <action
+            android:id="@+id/action_shoppingListFragment_to_userFragment"
+            app:destination="@id/userFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userFragment"
+        android:name="com.uc3m.searchyourrecipe.views.UserFragment"
+        android:label="User"
+        tools:layout="@layout/fragment_user"/>
 </navigation>
