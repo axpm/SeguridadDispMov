@@ -45,10 +45,10 @@
         app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
-        android:id="@+id/description"
+        android:id="@+id/calories"
         android:layout_width="165dp"
         android:layout_height="26dp"
-        android:text="Description"
+        android:text="Calories"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/starButton"
