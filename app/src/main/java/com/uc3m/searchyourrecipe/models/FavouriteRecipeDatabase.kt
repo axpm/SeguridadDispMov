@@ -5,22 +5,22 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [FavoriteRecipe::class], version = 1, exportSchema = false)
-abstract class FavoriteRecipeDatabase: RoomDatabase() {
+@Database(entities = [FavouriteRecipe::class], version = 1, exportSchema = false)
+abstract class FavouriteRecipeDatabase: RoomDatabase() {
 
-    abstract fun favRecipeDAO(): FavoriteRecipeDAO
+    abstract fun favRecipeDAO(): FavouriteRecipeDAO
 
     companion object{
         @Volatile
-        private var INSTANCE: FavoriteRecipeDatabase? = null
+        private var INSTANCE: FavouriteRecipeDatabase? = null
 
-        fun getDatabase(context: Context): FavoriteRecipeDatabase{
+        fun getDatabase(context: Context): FavouriteRecipeDatabase{
             synchronized(this){
                 var instance = INSTANCE
                 if(instance == null){
                     instance = Room.databaseBuilder(
                         context.applicationContext,
-                        FavoriteRecipeDatabase::class.java,
+                        FavouriteRecipeDatabase::class.java,
                         "favorite_recipe_database"
                     ).fallbackToDestructiveMigration().build()
                 }
