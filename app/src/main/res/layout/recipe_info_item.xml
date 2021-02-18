@@ -11,8 +11,8 @@
         android:id="@+id/healthTitle"
         android:layout_width="228dp"
         android:layout_height="35dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="24dp"
         android:text="HEALTH STATS"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ingredientsList" />
@@ -42,13 +42,11 @@
         android:id="@+id/ingredientsTitle"
         android:layout_width="228dp"
         android:layout_height="35dp"
-        android:layout_marginTop="196dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="24dp"
         android:text="INGREDIENTS"
-        app:layout_constraintEnd_toStartOf="@+id/webButton"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/webRecipe" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ingredientsList"
@@ -60,14 +58,16 @@
         app:layout_constraintTop_toBottomOf="@+id/ingredientsTitle" />
 
     <Button
-        android:id="@+id/webButton"
-        android:layout_width="122dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="184dp"
-        android:layout_marginEnd="28dp"
-        android:text="Visit Web"
+        android:id="@+id/ingredientsButton"
+        android:layout_width="136dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="60dp"
+        android:text="SAVE INGREDIENTS"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/webRecipe"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="355dp"
@@ -76,5 +76,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/healthTitle" />
+
+    <Button
+        android:id="@+id/webRecipe"
+        android:layout_width="136dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="16dp"
+        android:text="VISIT WEB"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
