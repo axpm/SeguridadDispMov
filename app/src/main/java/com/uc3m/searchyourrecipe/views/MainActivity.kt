@@ -1,6 +1,7 @@
 package com.uc3m.searchyourrecipe.views
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -25,14 +26,14 @@ class MainActivity : AppCompatActivity() {
         bottomNavView = findViewById(R.id.bottomNavView)
 
         // Coger el Navigation Controller
-        var navController = findNavController(R.id.fragNavHost)
+        val navController = findNavController(R.id.fragNavHost)
 
         // Asociar el la Navigation Controller con el BottomNavigationView
         bottomNavView.setupWithNavController(navController)
 
         // Setting Up ActionBar with Navigation Controller
         // Pass the IDs of top-level destinations in AppBarConfiguration
-        var appBarConfiguration = AppBarConfiguration(
+        val appBarConfiguration = AppBarConfiguration(
                 topLevelDestinationIds = setOf (
                         R.id.favRecipesFragment,
                         R.id.searchFragment,
@@ -40,7 +41,16 @@ class MainActivity : AppCompatActivity() {
                         R.id.userFragment
                 )
         )
+
         setupActionBarWithNavController(navController, appBarConfiguration)
+    }
+
+    fun showBottomNavigation(){
+        bottomNavView.visibility = View.VISIBLE
+    }
+
+    fun hideBottomNavigation(){
+        bottomNavView.visibility = View.GONE
     }
 
 }

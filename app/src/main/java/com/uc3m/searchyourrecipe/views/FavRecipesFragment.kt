@@ -13,7 +13,7 @@ import com.uc3m.searchyourrecipe.databinding.FragmentFavRecipesBinding
 import com.uc3m.searchyourrecipe.viewModels.FavouriteRecipeViewModel
 
 class FavRecipesFragment : Fragment() {
-    private lateinit var  binding: FragmentFavRecipesBinding
+    private lateinit var  binding:  FragmentFavRecipesBinding
     private lateinit var favRecipesViewModel: FavouriteRecipeViewModel
 
     override fun onCreateView(

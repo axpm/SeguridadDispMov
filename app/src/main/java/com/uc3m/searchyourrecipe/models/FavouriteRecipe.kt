@@ -2,12 +2,14 @@ package com.uc3m.searchyourrecipe.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.versionedparcelable.ParcelField
+import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "favorite_recipe_table")
 data class FavouriteRecipe(
     @PrimaryKey(autoGenerate = false)
-    val id: Int, // uri
+    val id: String, // uri
     val title: String, // label
-    val calories: Int, // calories
-    val img: String //link a la imagen
+    val img: String, //image --> link a la imagen
+    val time: Int //totalTime --> tiempo en minutos
 )
