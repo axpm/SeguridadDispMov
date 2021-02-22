@@ -18,13 +18,26 @@
         tools:layout="@layout/fragment_search" />
 
     <fragment
-        android:id="@+id/shoppingListFragment"
-        android:name="com.uc3m.searchyourrecipe.views.ShoppingListFragment"
+        android:id="@+id/shoppingListFragmentBis"
+        android:name="com.uc3m.searchyourrecipe.views.ShoppingListFragmentBis"
         android:label="Shopping List"
-        tools:layout="@layout/fragment_shopping_list" />
+        tools:layout="@layout/fragment_shopping_list" >
+        <action
+            android:id="@+id/action_shoppingListFragmentBis_to_new_ingredient"
+            app:destination="@id/NewIngredient" />
+    </fragment>
     <fragment
         android:id="@+id/userFragment"
         android:name="com.uc3m.searchyourrecipe.views.UserFragment"
         android:label="User"
         tools:layout="@layout/fragment_user"/>
+    <fragment
+        android:id="@+id/NewIngredient"
+        android:name="com.uc3m.searchyourrecipe.views.NewIngredient"
+        android:label="New Ingredient"
+        tools:layout="@layout/fragment_new_ingredient" >
+        <action
+            android:id="@+id/action_newIngredient_to_shoppingListFragmentBis"
+            app:destination="@id/shoppingListFragmentBis" />
+    </fragment>
 </navigation>
