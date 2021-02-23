@@ -24,7 +24,6 @@ import com.uc3m.searchyourrecipe.viewModels.ShoppingListItemViewModel
 class ShoppingListFragmentBis : Fragment() {
     private lateinit var binding: FragmentShoppingListBinding
     private lateinit var bindingRecyclerView: RecyclerViewIngredientItemBinding
-
     private lateinit var shoppingListItemViewModel: ShoppingListItemViewModel
 
     override fun onCreateView(
@@ -33,11 +32,11 @@ class ShoppingListFragmentBis : Fragment() {
     ): View? {
         binding = FragmentShoppingListBinding.inflate(inflater, container, false)
         bindingRecyclerView = RecyclerViewIngredientItemBinding.inflate(inflater, container, false)
-
+        shoppingListItemViewModel = ViewModelProvider(this).get(ShoppingListItemViewModel::class.java)
         val view = binding.root
 
         //Lista de ingredientes
-        val adapter = ShoppingListAdapter()
+        val adapter = ShoppingListAdapter(shoppingListItemViewModel)
         val recyclerView = binding.recyclerViewShoppingList
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())

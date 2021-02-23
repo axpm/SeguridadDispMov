@@ -12,17 +12,14 @@ import com.uc3m.searchyourrecipe.models.ShoppingListItemDAO
 import com.uc3m.searchyourrecipe.models.ShoppingListItemRepository
 import com.uc3m.searchyourrecipe.viewModels.ShoppingListItemViewModel
 
-class ShoppingListAdapter : RecyclerView.Adapter<ShoppingListAdapter.MyViewHolder>() {
+class ShoppingListAdapter(private val viewModel: ShoppingListItemViewModel) : RecyclerView.Adapter<ShoppingListAdapter.MyViewHolder>() {
 
     private var shoppingList = emptyList<ShoppingListItem>()
-    private lateinit var shoppingListDAO: ShoppingListItemDAO
-    private lateinit var shoppingListItemViewModel:ShoppingListItemViewModel
     class MyViewHolder(val binding: RecyclerViewIngredientItemBinding): RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding = RecyclerViewIngredientItemBinding.inflate(LayoutInflater.from(parent.context), parent,
                 false)
-       // shoppingListItemViewModel = ViewModelProvider(this).get(ShoppingListItemViewModel::class.java)
         return MyViewHolder(binding)
     }
 
@@ -30,9 +27,9 @@ class ShoppingListAdapter : RecyclerView.Adapter<ShoppingListAdapter.MyViewHolde
         val currentItem = shoppingList[position]
         with(holder){
             binding.ingredient.text = currentItem.nameIngredient.toString()
+            //Evento listener para eliminar un ingrediente
             binding.deleteIngredient.setOnClickListener{
                 deleteIngre(position) //El metodo se encuentra abajo
-                println("funciona?")
             }
         }
     }
@@ -46,11 +43,12 @@ class ShoppingListAdapter : RecyclerView.Adapter<ShoppingListAdapter.MyViewHolde
         //notificar cuando hay cambios y todos los que esten observando este liveData se actualizaran
         notifyDataSetChanged()
     }
+    //Eiminamos el ingrediente de la bbdd
     fun deleteIngre(position: Int) {
         val item = shoppingList[position]
-        (shoppingList as MutableList).remove(item)
+        //(shoppingList as MutableList).remove(item)
         //Cuando llamo al metodo, me indica que shoppingListItemViewModel no esta inicializado
-        shoppingListItemViewModel.deleteIngredient(item)
+        viewModel.deleteIngredient(item)
         notifyItemChanged(position)
     }
 

@@ -33,7 +33,7 @@
         tools:layout="@layout/fragment_user"/>
     <fragment
         android:id="@+id/NewIngredient"
-        android:name="com.uc3m.searchyourrecipe.views.NewIngredient"
+        android:name="com.uc3m.searchyourrecipe.views.NewIngredientFragment"
         android:label="New Ingredient"
         tools:layout="@layout/fragment_new_ingredient" >
         <action
