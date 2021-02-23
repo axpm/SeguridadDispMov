@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
                 topLevelDestinationIds = setOf (
                         R.id.favRecipesFragment,
                         R.id.searchFragment,
-                        R.id.shoppingListFragment,
+                        R.id.shoppingListFragmentBis,
                         R.id.userFragment
                 )
         )
