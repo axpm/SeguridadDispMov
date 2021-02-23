@@ -15,7 +15,7 @@ import com.uc3m.searchyourrecipe.models.ShoppingListItem
 import com.uc3m.searchyourrecipe.viewModels.ShoppingListItemViewModel
 
 
-class NewIngredient : Fragment() {
+class NewIngredientFragment : Fragment() {
 
     private  lateinit var binding: FragmentNewIngredientBinding
     private lateinit var shoppingListItemViewModel: ShoppingListItemViewModel
