@@ -30,7 +30,12 @@ class ShoppingListItemViewModel (application: Application): AndroidViewModel(app
     fun deleteIngredient(shoppingListItem: ShoppingListItem){
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteIngredient(shoppingListItem)
+        }
+    }
 
+    fun deleteAllIngredients(){
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteAllIngredients()
         }
     }
 

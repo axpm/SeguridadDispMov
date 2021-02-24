@@ -17,4 +17,7 @@ interface ShoppingListItemDAO {
         @Delete
          fun deleteIngredient(ingredient: ShoppingListItem)
 
+        //Eliminar todos los ingredientes de la shoppinglist
+        @Query("DELETE FROM shopping_list_item_table")
+        fun deleteAllIngredients()
 }

@@ -51,6 +51,19 @@ class ShoppingListFragmentBis : Fragment() {
             findNavController().navigate(R.id.action_shoppingListFragmentBis_to_new_ingredient)
         }
 
+        //Boton DELETE ALL
+        binding.deleteAllIngredients.setOnClickListener{
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setTitle("Are you sure you want to delete all ingredients?")
+            builder.setPositiveButton("Yes"){_,_ ->
+                shoppingListItemViewModel.deleteAllIngredients()
+                Toast.makeText(requireContext(),"All ingredients have been deleted",
+                        Toast.LENGTH_SHORT).show()
+            }
+            builder.setNegativeButton("No"){_,_ -> }
+            builder.create().show()
+        }
+
         return view
     }
 

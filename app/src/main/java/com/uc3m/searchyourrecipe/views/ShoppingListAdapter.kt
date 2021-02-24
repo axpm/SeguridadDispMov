@@ -46,7 +46,6 @@ class ShoppingListAdapter(private val viewModel: ShoppingListItemViewModel) : Re
     //Eiminamos el ingrediente de la bbdd
     fun deleteIngre(position: Int) {
         val item = shoppingList[position]
-        //(shoppingList as MutableList).remove(item)
         //Cuando llamo al metodo, me indica que shoppingListItemViewModel no esta inicializado
         viewModel.deleteIngredient(item)
         notifyItemChanged(position)
