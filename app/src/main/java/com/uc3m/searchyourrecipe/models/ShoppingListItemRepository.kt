@@ -13,6 +13,10 @@ class ShoppingListItemRepository(private val shopppingListItemDAO: ShoppingListI
     //Eliminar un ingrediente a la shoppinglist
      suspend fun deleteIngredient(shoppingListItem: ShoppingListItem){
       shopppingListItemDAO.deleteIngredient(shoppingListItem)
+    }
 
+    //Eliminar un ingrediente a la shoppinglist
+    suspend fun deleteAllIngredients(){
+        shopppingListItemDAO.deleteAllIngredients()
     }
 }
