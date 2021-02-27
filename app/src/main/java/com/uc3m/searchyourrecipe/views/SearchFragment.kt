@@ -1,33 +1,29 @@
 package com.uc3m.searchyourrecipe.views
 
 import android.os.Bundle
+import android.util.Log
+import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.uc3m.searchyourrecipe.R
+import com.uc3m.searchyourrecipe.databinding.FragmentSearchBinding
+import com.uc3m.searchyourrecipe.repository.EdamamRepository
+import com.uc3m.searchyourrecipe.viewModels.FavouriteRecipeViewModel
+import com.uc3m.searchyourrecipe.viewModels.SearchViewModel
+import com.uc3m.searchyourrecipe.viewModels.SearchViewModelFactory
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [SearchFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class SearchFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    //private lateinit var searchViewModel: SearchViewModel
+    private lateinit var  binding: FragmentSearchBinding
+    private lateinit var favRecipesViewModel: FavouriteRecipeViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -35,26 +31,59 @@ class SearchFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search, container, false)
+        binding = FragmentSearchBinding.inflate(inflater, container, false)
+        val view = binding.root
+
+        // FAV RECIPES
+        favRecipesViewModel = ViewModelProvider(this).get(FavouriteRecipeViewModel::class.java)
+
+        // SEARCH
+        val edamamRepository = EdamamRepository()
+
+        val searchViewModelFactory = SearchViewModelFactory(edamamRepository)
+        val searchViewModel = ViewModelProvider(this, searchViewModelFactory).get(SearchViewModel::class.java)
+        searchViewModel.searchRecipe("chicken")
+
+        val adapter = SearchAdapter(favRecipesViewModel)
+        val recyclerView = binding.recyclerView
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        searchViewModel.myResponse.observe(viewLifecycleOwner, Observer { response ->
+            if (response.isSuccessful){
+                /*
+                val recipeTitle = response.body()?.toString()
+
+                val displayText = "Price: {recipeTitle.toString()} €"
+                Log.d("Response", recipeTitle.toString())
+                */
+
+                val hits = response.body()?.hits
+
+                if (hits != null) {
+                    adapter.setData(hits)
+                    /*
+                    for (hit in hits){
+                        adapter.setData(hit.recipe)
+                    }*/
+                }
+
+            }else{
+                Log.d("Response", response.errorBody().toString())
+
+                Toast.makeText(requireContext(),"Something went wrong",
+                        Toast.LENGTH_SHORT).show()
+
+
+            }
+        })
+
+        return view
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SearchFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SearchFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.search_menu, menu)
     }
+
+
 }

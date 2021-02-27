@@ -1,13 +1,17 @@
 package com.uc3m.searchyourrecipe.views
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.uc3m.searchyourrecipe.R
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,22 +29,33 @@ class MainActivity : AppCompatActivity() {
         bottomNavView = findViewById(R.id.bottomNavView)
 
         // Coger el Navigation Controller
-        var navController = findNavController(R.id.fragNavHost)
+        val navController = findNavController(R.id.fragNavHost)
 
         // Asociar el la Navigation Controller con el BottomNavigationView
         bottomNavView.setupWithNavController(navController)
 
         // Setting Up ActionBar with Navigation Controller
         // Pass the IDs of top-level destinations in AppBarConfiguration
-        var appBarConfiguration = AppBarConfiguration(
-                topLevelDestinationIds = setOf (
+        val appBarConfiguration = AppBarConfiguration(
+                topLevelDestinationIds = setOf(
                         R.id.favRecipesFragment,
                         R.id.searchFragment,
                         R.id.shoppingListFragmentBis,
                         R.id.userFragment
                 )
         )
+
         setupActionBarWithNavController(navController, appBarConfiguration)
+    }
+
+    override fun onSupportNavigateUp() = findNavController(R.id.fragNavHost).navigateUp()
+
+    fun showBottomNavigation(){
+        bottomNavView.visibility = View.VISIBLE
+    }
+
+    fun hideBottomNavigation(){
+        bottomNavView.visibility = View.GONE
     }
 
 }

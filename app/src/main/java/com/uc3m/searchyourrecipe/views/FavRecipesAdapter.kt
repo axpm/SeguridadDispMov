@@ -1,11 +1,10 @@
 package com.uc3m.searchyourrecipe.views
 
-import android.R
-import android.graphics.drawable.Drawable
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import com.uc3m.searchyourrecipe.databinding.RecyclerViewRecipeItemBinding
 import com.uc3m.searchyourrecipe.models.FavouriteRecipe
 
@@ -28,8 +27,25 @@ class FavRecipesAdapter: RecyclerView.Adapter<FavRecipesAdapter.MyViewHolder>() 
         val currentItem = favRecipesList[position]
         with(holder){
             binding.recipeName.text = currentItem.title.toString()
-            binding.calories.text = currentItem.calories.toString()
-            binding.imageRecipe.setImageURI(Uri.parse(currentItem.img.toString()))
+            binding.time.text = currentItem.time.toString() + "min"
+            Picasso.get().load(currentItem.img.toString()).into(binding.imageRecipe)
+
+            binding.imageRecipe.setOnClickListener {
+                val action = FavRecipesFragmentDirections
+                    .actionFavRecipesFragmentToRecipeFragment(currentItem.id.toString(), "", null)
+                holder.itemView.findNavController().navigate(action)
+            }
+            binding.recipeName.setOnClickListener {
+
+                val action = FavRecipesFragmentDirections
+                    .actionFavRecipesFragmentToRecipeFragment(currentItem.id.toString(), "", null)
+                holder.itemView.findNavController().navigate(action)
+            }
+
+            binding.starButton.setOnClickListener {
+
+            }
+
         }
     }
 
@@ -37,8 +53,8 @@ class FavRecipesAdapter: RecyclerView.Adapter<FavRecipesAdapter.MyViewHolder>() 
         return favRecipesList.size
     }
 
-    fun setData(studentList: List<FavouriteRecipe>){
-        this.favRecipesList = studentList
+    fun setData(list: List<FavouriteRecipe>){
+        this.favRecipesList = list
         notifyDataSetChanged()
     }
 

@@ -9,13 +9,21 @@
         android:id="@+id/favRecipesFragment"
         android:name="com.uc3m.searchyourrecipe.views.FavRecipesFragment"
         android:label="Favorites Recipes"
-        tools:layout="@layout/fragment_shopping_list"/>
+        tools:layout="@layout/fragment_shopping_list">
+        <action
+            android:id="@+id/action_favRecipesFragment_to_recipeFragment"
+            app:destination="@id/recipeFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.uc3m.searchyourrecipe.views.SearchFragment"
         android:label="Search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_recipeFragment"
+            app:destination="@id/recipeFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/shoppingListFragmentBis"
@@ -31,6 +39,23 @@
         android:name="com.uc3m.searchyourrecipe.views.UserFragment"
         android:label="User"
         tools:layout="@layout/fragment_user"/>
+
+    <fragment
+        android:id="@+id/recipeFragment"
+        android:name="com.uc3m.searchyourrecipe.views.RecipeFragment"
+        android:label="RecipeFragment"
+        tools:layout="@layout/fragment_recipe">
+        <argument
+            android:name="id"
+            app:argType="string" />
+        <argument
+            android:name="source"
+            app:argType="string" />
+        <argument
+            android:name="recipe"
+            app:argType="com.uc3m.searchyourrecipe.models.Recipe"
+            app:nullable="true" />
+    </fragment>
     <fragment
         android:id="@+id/NewIngredient"
         android:name="com.uc3m.searchyourrecipe.views.NewIngredientFragment"
