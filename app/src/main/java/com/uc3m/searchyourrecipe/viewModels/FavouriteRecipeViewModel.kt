@@ -3,16 +3,18 @@ package com.uc3m.searchyourrecipe.viewModels
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.uc3m.searchyourrecipe.models.FavouriteRecipe
 import com.uc3m.searchyourrecipe.models.FavouriteRecipeDatabase
-import com.uc3m.searchyourrecipe.models.FavouriteRecipeRepository
+import com.uc3m.searchyourrecipe.repository.FavouriteRecipeRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class FavouriteRecipeViewModel(application: Application): AndroidViewModel(application) {
 
     val readAll: LiveData<List<FavouriteRecipe>>
+
     private val repository: FavouriteRecipeRepository
 
     init {
@@ -26,5 +28,27 @@ class FavouriteRecipeViewModel(application: Application): AndroidViewModel(appli
             repository.addFavRecipe(favRecipe)
         }
     }
+
+    fun deleteFavRecipe(id: String){
+        viewModelScope.launch(Dispatchers.IO){
+            repository.deleteFavRecipeById(id)
+        }
+    }
+
+    fun getFavRecipeById(id: String){
+        viewModelScope.launch(Dispatchers.IO){
+            repository.getFavRecipeById(id)
+        }
+    }
+
+    fun existsFavRecipeById(id: String): LiveData<Boolean>{
+        val result = MutableLiveData<Boolean>()
+        viewModelScope.launch(Dispatchers.IO){
+            val ret = repository.existsFavRecipeById(id)
+            result.postValue(ret)
+        }
+        return result
+    }
+
 
 }

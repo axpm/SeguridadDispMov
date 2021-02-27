@@ -1,6 +1,5 @@
 package com.uc3m.searchyourrecipe.views
 
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.findNavController
@@ -32,11 +31,14 @@ class FavRecipesAdapter: RecyclerView.Adapter<FavRecipesAdapter.MyViewHolder>() 
             Picasso.get().load(currentItem.img.toString()).into(binding.imageRecipe)
 
             binding.imageRecipe.setOnClickListener {
-                val action = FavRecipesFragmentDirections.actionFavRecipesFragmentToRecipeFragment(currentItem.id.toString())
+                val action = FavRecipesFragmentDirections
+                    .actionFavRecipesFragmentToRecipeFragment(currentItem.id.toString(), "", null)
                 holder.itemView.findNavController().navigate(action)
             }
             binding.recipeName.setOnClickListener {
-                val action = FavRecipesFragmentDirections.actionFavRecipesFragmentToRecipeFragment(currentItem.id.toString())
+
+                val action = FavRecipesFragmentDirections
+                    .actionFavRecipesFragmentToRecipeFragment(currentItem.id.toString(), "", null)
                 holder.itemView.findNavController().navigate(action)
             }
 
@@ -51,8 +53,8 @@ class FavRecipesAdapter: RecyclerView.Adapter<FavRecipesAdapter.MyViewHolder>() 
         return favRecipesList.size
     }
 
-    fun setData(studentList: List<FavouriteRecipe>){
-        this.favRecipesList = studentList
+    fun setData(list: List<FavouriteRecipe>){
+        this.favRecipesList = list
         notifyDataSetChanged()
     }
 

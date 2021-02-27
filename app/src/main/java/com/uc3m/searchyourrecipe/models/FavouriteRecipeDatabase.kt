@@ -27,5 +27,6 @@ abstract class FavouriteRecipeDatabase: RoomDatabase() {
                 return instance
             }
         }
+
     }
 }
