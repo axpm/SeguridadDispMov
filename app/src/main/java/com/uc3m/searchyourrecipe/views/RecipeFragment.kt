@@ -15,7 +15,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.squareup.picasso.Picasso
-import com.uc3m.searchyourrecipe.databinding.FragmentRecipe2Binding
 import com.uc3m.searchyourrecipe.databinding.FragmentRecipeBinding
 import com.uc3m.searchyourrecipe.repository.EdamamRepository
 import com.uc3m.searchyourrecipe.viewModels.SearchViewModel
