@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.uc3m.searchyourrecipe.R
 import com.uc3m.searchyourrecipe.databinding.FragmentSearchBinding
+import com.uc3m.searchyourrecipe.models.Hit
 import com.uc3m.searchyourrecipe.repository.EdamamRepository
 import com.uc3m.searchyourrecipe.viewModels.FavouriteRecipeViewModel
 import com.uc3m.searchyourrecipe.viewModels.SearchViewModel
@@ -18,8 +19,10 @@ import com.uc3m.searchyourrecipe.viewModels.SearchViewModelFactory
 
 class SearchFragment : Fragment() {
 
-    private lateinit var  binding: FragmentSearchBinding
+    private lateinit var binding: FragmentSearchBinding
     private lateinit var favRecipesViewModel: FavouriteRecipeViewModel
+
+    private var recipeListData: List<Hit> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,10 +52,20 @@ class SearchFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = FragmentSearchBinding.inflate(inflater, container, false)
         val view = binding.root
+
+        if (recipeListData.isNotEmpty()) {
+
+            val adapter = SearchAdapter(favRecipesViewModel)
+            val recyclerView = binding.recyclerView
+            recyclerView.adapter = adapter
+            recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+            adapter.setData(recipeListData)
+        }
 
         return view
     }
@@ -88,6 +101,8 @@ class SearchFragment : Fragment() {
                 val hits = response.body()?.hits
 
                 if (hits != null) {
+                    recipeListData = hits
+
                     adapter.setData(hits)
                     /*
                     for (hit in hits){
@@ -112,3 +127,4 @@ class SearchFragment : Fragment() {
 
 
 }
+
