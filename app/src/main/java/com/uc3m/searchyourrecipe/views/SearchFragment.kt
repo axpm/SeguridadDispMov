@@ -3,6 +3,7 @@ package com.uc3m.searchyourrecipe.views
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -14,6 +15,7 @@ import com.uc3m.searchyourrecipe.repository.EdamamRepository
 import com.uc3m.searchyourrecipe.viewModels.FavouriteRecipeViewModel
 import com.uc3m.searchyourrecipe.viewModels.SearchViewModel
 import com.uc3m.searchyourrecipe.viewModels.SearchViewModelFactory
+import java.util.*
 
 class SearchFragment : Fragment() {
 
@@ -26,6 +28,26 @@ class SearchFragment : Fragment() {
         setHasOptionsMenu(true)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.search_menu, menu)
+
+        val searchItem: MenuItem = menu.findItem(R.id.action_search)
+
+        val searchView = searchItem.actionView as SearchView
+
+        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                //Toast.makeText(requireContext(), query, Toast.LENGTH_LONG).show()
+                executeQuery(query)
+                return false
+            }
+
+            override fun onQueryTextChange(query: String?): Boolean {
+                return false
+            }
+        })
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,6 +56,10 @@ class SearchFragment : Fragment() {
         binding = FragmentSearchBinding.inflate(inflater, container, false)
         val view = binding.root
 
+        return view
+    }
+
+    private fun executeQuery(query: String?) {
         // FAV RECIPES
         favRecipesViewModel = ViewModelProvider(this).get(FavouriteRecipeViewModel::class.java)
 
@@ -42,7 +68,10 @@ class SearchFragment : Fragment() {
 
         val searchViewModelFactory = SearchViewModelFactory(edamamRepository)
         val searchViewModel = ViewModelProvider(this, searchViewModelFactory).get(SearchViewModel::class.java)
-        searchViewModel.searchRecipe("chicken")
+        //searchViewModel.searchRecipe("chicken")
+        if (query != null) {
+            searchViewModel.searchRecipe(query)
+        }
 
         val adapter = SearchAdapter(favRecipesViewModel)
         val recyclerView = binding.recyclerView
@@ -78,12 +107,10 @@ class SearchFragment : Fragment() {
             }
         })
 
-        return view
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.search_menu, menu)
-    }
+
+
 
 
 }
