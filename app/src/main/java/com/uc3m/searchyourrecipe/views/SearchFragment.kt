@@ -15,11 +15,9 @@ import com.uc3m.searchyourrecipe.repository.EdamamRepository
 import com.uc3m.searchyourrecipe.viewModels.FavouriteRecipeViewModel
 import com.uc3m.searchyourrecipe.viewModels.SearchViewModel
 import com.uc3m.searchyourrecipe.viewModels.SearchViewModelFactory
-import java.util.*
 
 class SearchFragment : Fragment() {
 
-    //private lateinit var searchViewModel: SearchViewModel
     private lateinit var  binding: FragmentSearchBinding
     private lateinit var favRecipesViewModel: FavouriteRecipeViewModel
 

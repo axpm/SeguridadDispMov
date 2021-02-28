@@ -27,7 +27,7 @@
 
     <fragment
         android:id="@+id/shoppingListFragmentBis"
-        android:name="com.uc3m.searchyourrecipe.views.ShoppingListFragmentBis"
+        android:name="com.uc3m.searchyourrecipe.views.ShoppingListFragment"
         android:label="Shopping List"
         tools:layout="@layout/fragment_shopping_list" >
         <action
