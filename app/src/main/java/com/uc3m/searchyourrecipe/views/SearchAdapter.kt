@@ -2,15 +2,19 @@ package com.uc3m.searchyourrecipe.views
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LifecycleRegistryOwner
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
+import com.uc3m.searchyourrecipe.R
 import com.uc3m.searchyourrecipe.databinding.RecyclerViewRecipeItemBinding
 import com.uc3m.searchyourrecipe.models.FavouriteRecipe
 import com.uc3m.searchyourrecipe.models.Hit
+import com.uc3m.searchyourrecipe.models.Recipe
 import com.uc3m.searchyourrecipe.viewModels.FavouriteRecipeViewModel
 
-class SearchAdapter(private val favViewModel: FavouriteRecipeViewModel): RecyclerView.Adapter<SearchAdapter.MyViewHolder>() {
+class SearchAdapter(private val favViewModel: FavouriteRecipeViewModel, private val viewLifecycleOwner: LifecycleOwner): RecyclerView.Adapter<SearchAdapter.MyViewHolder>() {
 
     private var recipesList = emptyList<Hit>()
 
@@ -40,7 +44,7 @@ class SearchAdapter(private val favViewModel: FavouriteRecipeViewModel): Recycle
                 val action = SearchFragmentDirections.actionSearchFragmentToRecipeFragment(currentItem.id, "search", currentItem)
                 holder.itemView.findNavController().navigate(action)
             }
-
+            isInFav(currentItem, binding)
             /*
             // comprobar el id para cambiar
             if ( isInFav(currentItem.id) ){
@@ -69,21 +73,42 @@ class SearchAdapter(private val favViewModel: FavouriteRecipeViewModel): Recycle
 
     private fun addFavRecipe(newFav: FavouriteRecipe) {
         favViewModel.addFavRecipe(newFav)
+        notifyDataSetChanged()
     }
 
     private fun removeFavRecipe(id: String) {
         favViewModel.deleteFavRecipe(id)
-        //notifyItemChanged(position)
+        notifyDataSetChanged()
     }
 
-    private fun isInFav(id: String): Boolean {
-        var ret: Boolean = false
+    private fun isInFav(currentItem: Recipe , binding: RecyclerViewRecipeItemBinding) {
 
-        //favViewModel.existsFavRecipeById(id).observe(this, ret)
-        //favViewModel.existsFavRecipeById(id).observe(viewLifecycleOwner, {
-        //    ret -> ret = val
-        //})
-        return false
+        favViewModel.existsFavRecipeById(currentItem.id).observe(viewLifecycleOwner, {
+            ret ->
+            run {
+                // comprobar el id para cambiar
+                if ( ret ){
+                    // poner estrella rellena
+                    binding.starButton.setImageResource(R.drawable.ic_baseline_star_24)
+                    // eliminar de favoritos y cambiar el icono
+                    binding.starButton.setOnClickListener{
+                        removeFavRecipe(currentItem.id)
+                        binding.starButton.setImageResource(R.drawable.ic_baseline_star_border_24)
+                    }
+                }else{
+                    // poner estrella sin relleno
+                    binding.starButton.setImageResource(R.drawable.ic_baseline_star_border_24)
+                    // añadir a favoritos y cambiar el icono
+                    binding.starButton.setOnClickListener{
+                        val newFav = FavouriteRecipe(currentItem.id, currentItem.title, currentItem.img, currentItem.time)
+                        addFavRecipe(newFav)
+                        binding.starButton.setImageResource(R.drawable.ic_baseline_star_24)
+                    }
+                }
+            }
+
+        })
+
     }
 
     override fun getItemCount(): Int {

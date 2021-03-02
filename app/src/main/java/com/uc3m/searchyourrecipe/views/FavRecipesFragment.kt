@@ -26,12 +26,14 @@ class FavRecipesFragment : Fragment() {
         binding = FragmentFavRecipesBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        val adapter = FavRecipesAdapter()
+        favRecipesViewModel = ViewModelProvider(this).get(FavouriteRecipeViewModel::class.java)
+
+        val adapter = FavRecipesAdapter(requireContext(), favRecipesViewModel, viewLifecycleOwner)
         val recyclerView = binding.recyclerView
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        favRecipesViewModel = ViewModelProvider(this).get(FavouriteRecipeViewModel::class.java)
+
         favRecipesViewModel.readAll.observe(viewLifecycleOwner, {
             favRecipe ->
             run {
