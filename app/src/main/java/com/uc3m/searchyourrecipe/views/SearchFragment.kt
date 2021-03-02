@@ -64,7 +64,7 @@ class SearchFragment : Fragment() {
 
         if (recipeListData.isNotEmpty()) {
 
-            val adapter = SearchAdapter(favRecipesViewModel)
+            val adapter = SearchAdapter(favRecipesViewModel, viewLifecycleOwner)
             val recyclerView = binding.recyclerView
             recyclerView.adapter = adapter
             recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -99,7 +99,7 @@ class SearchFragment : Fragment() {
             searchViewModel.searchRecipe(query)
         }
 
-        val adapter = SearchAdapter(favRecipesViewModel)
+        val adapter = SearchAdapter(favRecipesViewModel, viewLifecycleOwner)
         val recyclerView = binding.recyclerView
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())

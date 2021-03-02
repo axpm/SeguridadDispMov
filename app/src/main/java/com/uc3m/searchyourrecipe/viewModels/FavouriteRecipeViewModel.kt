@@ -9,6 +9,7 @@ import com.uc3m.searchyourrecipe.models.FavouriteRecipe
 import com.uc3m.searchyourrecipe.models.FavouriteRecipeDatabase
 import com.uc3m.searchyourrecipe.repository.FavouriteRecipeRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 class FavouriteRecipeViewModel(application: Application): AndroidViewModel(application) {
