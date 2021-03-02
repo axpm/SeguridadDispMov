@@ -53,10 +53,9 @@ class RecipeFragment : Fragment() {
 
         // recogemos el parámetro "id"
         val uriRecipe = args.id
-        // cambiar el título por el ID
+        // cambiar el título
         val title = binding.title
-        title.text = uriRecipe
-
+        title.text = " "
         val adapter = RecipeIngredientAdapter()
         val recyclerView = binding.ingredientsList
         recyclerView.adapter = adapter

@@ -15,14 +15,14 @@
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_launcher_background" />
+        tools:srcCompat="@android:drawable/screen_background_light_transparent" />
 
     <TextView
         android:id="@+id/title"
         android:layout_width="206dp"
         android:layout_height="156dp"
         android:layout_marginTop="16dp"
-        android:text="TITLE RECIPE"
+        android:text="@string/title_recipe"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.408"
@@ -35,7 +35,7 @@
         android:layout_height="60dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="60dp"
-        android:text="SAVE INGREDIENTS"
+        android:text="@string/save_ingredients"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/webRecipe"
@@ -47,7 +47,7 @@
         android:layout_height="60dp"
         android:layout_marginStart="44dp"
         android:layout_marginTop="16dp"
-        android:text="VISIT WEB"
+        android:text="@string/visit_web"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
@@ -75,7 +75,7 @@
                     android:layout_width="228dp"
                     android:layout_height="35dp"
                     android:layout_marginTop="24dp"
-                    android:text="INGREDIENTS"
+                    android:text="@string/ingredients_title_recipe"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.167"
@@ -101,7 +101,7 @@
                     android:layout_height="35dp"
                     android:layout_marginStart="32dp"
                     android:layout_marginTop="8dp"
-                    android:text="HEALTH STATS"
+                    android:text="@string/health_stats_title_recipe"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/ingredientsList" />
