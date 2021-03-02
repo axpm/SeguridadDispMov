@@ -1,7 +1,6 @@
 package com.uc3m.searchyourrecipe.views
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.SearchView
 import android.widget.Toast
@@ -27,6 +26,7 @@ class SearchFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+        (activity as MainActivity).hideKeyboard()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -37,9 +37,12 @@ class SearchFragment : Fragment() {
         val searchView = searchItem.actionView as SearchView
 
         searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+
             override fun onQueryTextSubmit(query: String?): Boolean {
-                //Toast.makeText(requireContext(), query, Toast.LENGTH_LONG).show()
                 executeQuery(query)
+                binding.noRecipesSearched.visibility = View.GONE
+                binding.iconNoRecipesSearched.visibility = View.GONE
+
                 return false
             }
 
@@ -49,6 +52,7 @@ class SearchFragment : Fragment() {
         })
     }
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -56,6 +60,7 @@ class SearchFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentSearchBinding.inflate(inflater, container, false)
         val view = binding.root
+
 
         if (recipeListData.isNotEmpty()) {
 
@@ -65,10 +70,20 @@ class SearchFragment : Fragment() {
             recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
             adapter.setData(recipeListData)
+
+            binding.noRecipesSearched.visibility = View.GONE
+            binding.iconNoRecipesSearched.visibility = View.GONE
+
+        }
+        else {
+
+            binding.noRecipesSearched.visibility = View.VISIBLE
+            binding.iconNoRecipesSearched.visibility = View.VISIBLE
         }
 
         return view
     }
+
 
     private fun executeQuery(query: String?) {
         // FAV RECIPES
@@ -79,7 +94,7 @@ class SearchFragment : Fragment() {
 
         val searchViewModelFactory = SearchViewModelFactory(edamamRepository)
         val searchViewModel = ViewModelProvider(this, searchViewModelFactory).get(SearchViewModel::class.java)
-        //searchViewModel.searchRecipe("chicken")
+
         if (query != null) {
             searchViewModel.searchRecipe(query)
         }
@@ -91,31 +106,26 @@ class SearchFragment : Fragment() {
 
         searchViewModel.myResponse.observe(viewLifecycleOwner, Observer { response ->
             if (response.isSuccessful){
-                /*
-                val recipeTitle = response.body()?.toString()
-
-                val displayText = "Price: {recipeTitle.toString()} €"
-                Log.d("Response", recipeTitle.toString())
-                */
 
                 val hits = response.body()?.hits
 
                 if (hits != null) {
-                    recipeListData = hits
+                    if (hits.isNotEmpty()) {
+                        recipeListData = hits
 
-                    adapter.setData(hits)
-                    /*
-                    for (hit in hits){
-                        adapter.setData(hit.recipe)
-                    }*/
+                        adapter.setData(hits)
+
+                    }else {
+                        //Actualizar el recyclerView cuando la busqueda no devuelve ninguna receta
+                        adapter.setData(emptyList())
+                        Toast.makeText(requireContext(),query + " not found",Toast.LENGTH_SHORT).show()
+                    }
                 }
-
             }else{
-                Log.d("Response", response.errorBody().toString())
+                //Log.d("Response", response.errorBody().toString())
 
                 Toast.makeText(requireContext(),"Something went wrong",
                         Toast.LENGTH_SHORT).show()
-
 
             }
         })

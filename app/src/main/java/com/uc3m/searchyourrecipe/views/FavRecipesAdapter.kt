@@ -23,6 +23,7 @@ class FavRecipesAdapter: RecyclerView.Adapter<FavRecipesAdapter.MyViewHolder>() 
         return MyViewHolder(binding)
     }
 
+
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem = favRecipesList[position]
         with(holder){
@@ -30,18 +31,19 @@ class FavRecipesAdapter: RecyclerView.Adapter<FavRecipesAdapter.MyViewHolder>() 
             binding.time.text = currentItem.time.toString() + "min"
             Picasso.get().load(currentItem.img.toString()).into(binding.imageRecipe)
 
+            //Si pinchamos sobre la imagen o el nombre, accedemos a la informacion de la receta
             binding.imageRecipe.setOnClickListener {
                 val action = FavRecipesFragmentDirections
                     .actionFavRecipesFragmentToRecipeFragment(currentItem.id.toString(), "", null)
                 holder.itemView.findNavController().navigate(action)
             }
-            binding.recipeName.setOnClickListener {
 
+            binding.recipeName.setOnClickListener {
                 val action = FavRecipesFragmentDirections
                     .actionFavRecipesFragmentToRecipeFragment(currentItem.id.toString(), "", null)
                 holder.itemView.findNavController().navigate(action)
             }
-
+            //Añadimos a favoritos
             binding.starButton.setOnClickListener {
 
             }

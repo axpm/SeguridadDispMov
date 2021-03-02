@@ -1,6 +1,5 @@
 package com.uc3m.searchyourrecipe.views
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.findNavController
@@ -9,7 +8,6 @@ import com.squareup.picasso.Picasso
 import com.uc3m.searchyourrecipe.databinding.RecyclerViewRecipeItemBinding
 import com.uc3m.searchyourrecipe.models.FavouriteRecipe
 import com.uc3m.searchyourrecipe.models.Hit
-import com.uc3m.searchyourrecipe.models.Recipe
 import com.uc3m.searchyourrecipe.viewModels.FavouriteRecipeViewModel
 
 class SearchAdapter(private val favViewModel: FavouriteRecipeViewModel): RecyclerView.Adapter<SearchAdapter.MyViewHolder>() {
@@ -95,6 +93,10 @@ class SearchAdapter(private val favViewModel: FavouriteRecipeViewModel): Recycle
     fun setData(list: List<Hit>){
         this.recipesList = list
         notifyDataSetChanged()
+    }
+
+    fun clearData(list: List<Hit>){
+
     }
 
 }

@@ -4,19 +4,14 @@ package com.uc3m.searchyourrecipe.views
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
-import android.widget.Button
-import android.widget.EditText
-import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.uc3m.searchyourrecipe.R
-import com.uc3m.searchyourrecipe.databinding.DialogAddIngredientBinding
 import com.uc3m.searchyourrecipe.databinding.FragmentShoppingListBinding
 import com.uc3m.searchyourrecipe.databinding.RecyclerViewIngredientItemBinding
-import com.uc3m.searchyourrecipe.models.ShoppingListItem
 import com.uc3m.searchyourrecipe.viewModels.ShoppingListItemViewModel
 
 
@@ -28,6 +23,9 @@ class ShoppingListFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+        (activity as MainActivity).hideKeyboard()
+        (activity as MainActivity).showBottomNavigation()
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -48,6 +46,7 @@ class ShoppingListFragment : Fragment() {
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
+
         binding = FragmentShoppingListBinding.inflate(inflater, container, false)
         bindingRecyclerView = RecyclerViewIngredientItemBinding.inflate(inflater, container, false)
         shoppingListItemViewModel = ViewModelProvider(this).get(ShoppingListItemViewModel::class.java)
@@ -83,6 +82,10 @@ class ShoppingListFragment : Fragment() {
         builder.setNegativeButton("No"){_,_ -> }
         builder.create().show()
     }
+
+
+
+
 
 
 }

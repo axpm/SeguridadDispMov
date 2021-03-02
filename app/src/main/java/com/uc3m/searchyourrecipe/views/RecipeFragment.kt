@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,13 +13,18 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.squareup.picasso.Picasso
+import com.uc3m.searchyourrecipe.R
 import com.uc3m.searchyourrecipe.databinding.FragmentRecipeBinding
+import com.uc3m.searchyourrecipe.models.Ingredient
+import com.uc3m.searchyourrecipe.models.ShoppingListItem
 import com.uc3m.searchyourrecipe.repository.EdamamRepository
 import com.uc3m.searchyourrecipe.viewModels.SearchViewModel
 import com.uc3m.searchyourrecipe.viewModels.SearchViewModelFactory
+import com.uc3m.searchyourrecipe.viewModels.ShoppingListItemViewModel
 import java.lang.Error
 
 
@@ -26,6 +32,12 @@ class RecipeFragment : Fragment() {
 
     val args: RecipeFragmentArgs by navArgs()
     private lateinit var binding: FragmentRecipeBinding
+    private lateinit var shoppingListItemViewModel: ShoppingListItemViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        (activity as MainActivity).hideKeyboard()
+    }
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -33,6 +45,10 @@ class RecipeFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentRecipeBinding.inflate(inflater, container, false)
+
+        shoppingListItemViewModel = ViewModelProvider(this).get(ShoppingListItemViewModel::class.java)
+
+
         val view = binding.root
 
         // recogemos el parámetro "id"
@@ -58,8 +74,10 @@ class RecipeFragment : Fragment() {
                     openURL.data = Uri.parse(recipe.url)
                     startActivity(openURL)
                 }
-
                 adapter.setData(recipe.ingredients)
+                binding.ingredientsButton.setOnClickListener{
+                    insertDataToDatabase(recipe.ingredients)
+                }
             }
         }else{
 
@@ -97,8 +115,6 @@ class RecipeFragment : Fragment() {
             })
         }
 
-
-
         return view
     }
 
@@ -111,5 +127,27 @@ class RecipeFragment : Fragment() {
         (activity as MainActivity).showBottomNavigation()
         super.onDetach()
     }
+
+
+    //Comunicarse con Room
+    private fun insertDataToDatabase(list: List<Ingredient>) {
+        for (item in list) {
+            //validamos
+            val ingredientName = item.text
+            if (inputCheck(ingredientName)) {
+                val ingredient = ShoppingListItem(ingredientName)
+                shoppingListItemViewModel.addIngredient(ingredient)
+            }
+        }
+            Toast.makeText(requireContext(), "Ingredients Added", Toast.LENGTH_LONG).show()
+        }
+
+    private fun inputCheck(ingredientName: String): Boolean{
+        //Toast.makeText(requireContext(), "There are no ingredients to add", Toast.LENGTH_LONG).show()
+        return !(TextUtils.isEmpty(ingredientName))
+    }
+
+    //Validar que no esten vacios
+
 
 }

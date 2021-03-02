@@ -1,12 +1,14 @@
 package com.uc3m.searchyourrecipe.views
 
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -50,12 +52,26 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSupportNavigateUp() = findNavController(R.id.fragNavHost).navigateUp()
 
+    //Mostrar u ocultar el menu de navegacion
     fun showBottomNavigation(){
         bottomNavView.visibility = View.VISIBLE
     }
 
     fun hideBottomNavigation(){
         bottomNavView.visibility = View.GONE
+    }
+
+    @SuppressLint("ServiceCast")
+    fun hideKeyboard() {
+        val inputMethodManager =
+                this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+
+        // Check if no view has focus
+        val currentFocusedView = this.currentFocus
+        currentFocusedView?.let {
+            inputMethodManager.hideSoftInputFromWindow(
+                    currentFocusedView.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+        }
     }
 
 }

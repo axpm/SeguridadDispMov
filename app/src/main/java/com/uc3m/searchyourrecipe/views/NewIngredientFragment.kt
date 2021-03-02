@@ -1,5 +1,6 @@
 package com.uc3m.searchyourrecipe.views
 
+import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
 import androidx.fragment.app.Fragment
@@ -20,29 +21,32 @@ class NewIngredientFragment : Fragment() {
     private  lateinit var binding: FragmentNewIngredientBinding
     private lateinit var shoppingListItemViewModel: ShoppingListItemViewModel
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        (activity as MainActivity).hideKeyboard()
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        //return super.onCreateView(inflater, container, savedInstanceState)
-        println("holaa")
+
         binding = FragmentNewIngredientBinding.inflate(inflater, container, false)
 
         shoppingListItemViewModel = ViewModelProvider(this).get(ShoppingListItemViewModel::class.java)
-        //Boton de anyadir contacto
 
+        //Boton de añadir
         binding.entrarBoton.setOnClickListener{
-
             insertDataToDatabase()
+            (activity as MainActivity).hideBottomNavigation()
         }
+
         return binding.root
     }
     //Comunicarse con Room
     private fun insertDataToDatabase(){
-        //cogemos los bdatos de la interfaz
+        //Cogemos los datos de la interfaz
         val ingredientName = binding.nombreInput.text.toString()
 
-        println("ingredinetee " +ingredientName)
-        //validamos
+        //validamos que no este vacio
         if (inputCheck(ingredientName)){
-            //En el id ponemos 0, pero nos da igual porque es autoincremental. Convertimos age de editable a string y, luego a entero
             val ingredient = ShoppingListItem(ingredientName)
             shoppingListItemViewModel.addIngredient(ingredient)
             Toast.makeText(requireContext(), "Ingredient Added", Toast.LENGTH_LONG).show()
@@ -53,9 +57,19 @@ class NewIngredientFragment : Fragment() {
         }
 
     }
+
     //Validar que no esten vacios
     private fun inputCheck(ingredientName: String): Boolean{
         return !(TextUtils.isEmpty(ingredientName))
+    }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (activity as MainActivity).hideBottomNavigation()
+    }
+
+    override fun onDetach() {
+        (activity as MainActivity).showBottomNavigation()
+        super.onDetach()
     }
 }

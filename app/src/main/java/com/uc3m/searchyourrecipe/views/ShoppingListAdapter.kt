@@ -1,15 +1,10 @@
 package com.uc3m.searchyourrecipe.views
 
-import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.uc3m.searchyourrecipe.databinding.RecyclerViewIngredientItemBinding
 import com.uc3m.searchyourrecipe.models.ShoppingListItem
-import com.uc3m.searchyourrecipe.models.ShoppingListItemDAO
-import com.uc3m.searchyourrecipe.models.ShoppingListItemRepository
 import com.uc3m.searchyourrecipe.viewModels.ShoppingListItemViewModel
 
 class ShoppingListAdapter(private val viewModel: ShoppingListItemViewModel) : RecyclerView.Adapter<ShoppingListAdapter.MyViewHolder>() {

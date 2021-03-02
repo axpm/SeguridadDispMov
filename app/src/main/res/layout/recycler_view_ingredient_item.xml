@@ -8,14 +8,15 @@
 
     <TextView
         android:id="@+id/ingredient"
-        android:layout_width="170dp"
-        android:layout_height="30dp"
+        android:layout_width="281dp"
+        android:layout_height="74dp"
+        android:layout_marginStart="4dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="76dp"
-        android:text="Ingredient"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:layout_marginEnd="5dp"
+        android:text="@string/ingredient"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black_app"
         app:layout_constraintEnd_toStartOf="@+id/deleteIngredient"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,10 +25,12 @@
         android:layout_width="45dp"
         android:layout_height="48dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="32dp"
-        android:text="X"
+        android:layout_marginEnd="5dp"
+        android:text="@string/deleteIngredient"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.633"
+        app:layout_constraintStart_toEndOf="@+id/ingredient"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 

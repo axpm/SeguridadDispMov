@@ -4,4 +4,10 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="ingedientName">ingredientName</string>
     <string name="nombre_input">Name Ingredient</string>
+    <string name="ingredient">Ingredient</string>
+    <string name="deleteIngredient">X</string>
+    <string name="noRecipesSearch">Search any recipe you would like to cook!</string>
+    <string name="emptySearch">There are no recipes for your search, try again!</string>
+    <string name="noRecipesFaved">Start saving recipes!</string>
+
 </resources>

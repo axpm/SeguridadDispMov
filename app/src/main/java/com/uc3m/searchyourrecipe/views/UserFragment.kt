@@ -11,6 +11,8 @@ class UserFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        (activity as MainActivity).hideKeyboard()
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
