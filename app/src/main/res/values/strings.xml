@@ -9,5 +9,10 @@
     <string name="noRecipesSearch">Search any recipe you would like to cook!</string>
     <string name="emptySearch">There are no recipes for your search, try again!</string>
     <string name="noRecipesFaved">Start saving recipes!</string>
+    <string name="title_recipe">TITLE RECIPE</string>
+    <string name="save_ingredients">SAVE INGREDIENTS</string>
+    <string name="visit_web">VISIT WEB</string>
+    <string name="ingredients_title_recipe">INGREDIENTS</string>
+    <string name="health_stats_title_recipe">HEALTH STATS</string>
 
 </resources>
