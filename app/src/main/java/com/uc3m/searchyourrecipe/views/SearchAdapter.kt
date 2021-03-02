@@ -44,55 +44,33 @@ class SearchAdapter(private val favViewModel: FavouriteRecipeViewModel, private 
                 val action = SearchFragmentDirections.actionSearchFragmentToRecipeFragment(currentItem.id, "search", currentItem)
                 holder.itemView.findNavController().navigate(action)
             }
-            isInFav(currentItem, binding)
-            /*
-            // comprobar el id para cambiar
-            if ( isInFav(currentItem.id) ){
-                // poner estrella rellena
-                binding.starButton.setImageResource(R.drawable.ic_baseline_star_24)
-                // eliminar de favoritos y cambiar el icono
-                binding.starButton.setOnClickListener{
-                    removeFavRecipe(currentItem.id)
-                    binding.starButton.setImageResource(R.drawable.ic_baseline_star_border_24)
-                }
-            }else{
-                // poner estrella sin relleno
-                binding.starButton.setImageResource(R.drawable.ic_baseline_star_border_24)
-                // añadir a favoritos y cambiar el icono
-                binding.starButton.setOnClickListener{
-                    val newFav = FavouriteRecipe(currentItem.id, currentItem.title, currentItem.img, currentItem.time)
-                    addFavRecipe(newFav)
-                    binding.starButton.setImageResource(R.drawable.ic_baseline_star_24)
-                }
-            }
-            */
-
+            isInFav(currentItem, position, binding)
 
         }
     }
 
-    private fun addFavRecipe(newFav: FavouriteRecipe) {
+    private fun addFavRecipe(newFav: FavouriteRecipe, position: Int) {
         favViewModel.addFavRecipe(newFav)
-        notifyDataSetChanged()
+        notifyItemChanged(position)
     }
 
-    private fun removeFavRecipe(id: String) {
+    private fun removeFavRecipe(id: String, position: Int) {
         favViewModel.deleteFavRecipe(id)
-        notifyDataSetChanged()
+        notifyItemChanged(position)
     }
 
-    private fun isInFav(currentItem: Recipe , binding: RecyclerViewRecipeItemBinding) {
+    private fun isInFav(currentItem: Recipe, position: Int, binding: RecyclerViewRecipeItemBinding) {
 
         favViewModel.existsFavRecipeById(currentItem.id).observe(viewLifecycleOwner, {
             ret ->
             run {
-                // comprobar el id para cambiar
+                // comprobar si esta en favoritos para cambiar la apariecia
                 if ( ret ){
                     // poner estrella rellena
                     binding.starButton.setImageResource(R.drawable.ic_baseline_star_24)
                     // eliminar de favoritos y cambiar el icono
                     binding.starButton.setOnClickListener{
-                        removeFavRecipe(currentItem.id)
+                        removeFavRecipe(currentItem.id, position)
                         binding.starButton.setImageResource(R.drawable.ic_baseline_star_border_24)
                     }
                 }else{
@@ -101,7 +79,7 @@ class SearchAdapter(private val favViewModel: FavouriteRecipeViewModel, private 
                     // añadir a favoritos y cambiar el icono
                     binding.starButton.setOnClickListener{
                         val newFav = FavouriteRecipe(currentItem.id, currentItem.title, currentItem.img, currentItem.time)
-                        addFavRecipe(newFav)
+                        addFavRecipe(newFav, position)
                         binding.starButton.setImageResource(R.drawable.ic_baseline_star_24)
                     }
                 }
@@ -118,10 +96,6 @@ class SearchAdapter(private val favViewModel: FavouriteRecipeViewModel, private 
     fun setData(list: List<Hit>){
         this.recipesList = list
         notifyDataSetChanged()
-    }
-
-    fun clearData(list: List<Hit>){
-
     }
 
 }
