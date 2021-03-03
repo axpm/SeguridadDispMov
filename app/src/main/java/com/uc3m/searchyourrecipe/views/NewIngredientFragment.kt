@@ -53,7 +53,7 @@ class NewIngredientFragment : Fragment() {
             findNavController().navigate(R.id.action_newIngredient_to_shoppingListFragmentBis)
 
         }else{
-            Toast.makeText(requireContext(), "Fill all the fields", Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), "Fill the field", Toast.LENGTH_LONG).show()
         }
 
     }

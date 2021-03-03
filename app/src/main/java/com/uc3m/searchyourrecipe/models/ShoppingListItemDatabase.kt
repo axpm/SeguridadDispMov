@@ -16,7 +16,7 @@ abstract class ShoppingListItemDatabase: RoomDatabase() {
         //Creo una instancia de la bbdd. Si existe, devuelve la instancia (conexion a la bbdd)
 // y si no existe, la crea con el Room.databaseBuilder especificando el contexto, el tipo de entidad (ShoppingListItem) y el nombre de la bbdd
         fun getDatabase(context: Context): ShoppingListItemDatabase{
-            synchronized(this){ //no hay que poner lock, solo this y sale solo //sincro: cuando tienes concurrencia, te limita que solo se va a ejecutar una vez
+            synchronized(this){
                 var instance = INSTANCE
                 if (instance == null){
                     instance = Room.databaseBuilder(
