@@ -21,7 +21,7 @@ class ShoppingListAdapter(private val viewModel: ShoppingListItemViewModel) : Re
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem = shoppingList[position]
         with(holder){
-            binding.ingredient.text = currentItem.nameIngredient.toString()
+            binding.ingredient.text = currentItem.nameIngredient
             //Evento listener para eliminar un ingrediente
             binding.deleteIngredient.setOnClickListener{
                 deleteIngre(position) //El metodo se encuentra abajo

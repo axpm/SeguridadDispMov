@@ -98,6 +98,9 @@ class RecipeFragment : Fragment() {
                             startActivity(openURL)
                         }
                         adapter.setData(recipe.ingredients)
+                        binding.ingredientsButton.setOnClickListener{
+                            insertDataToDatabase(recipe.ingredients)
+                        }
                     }
 
                     //Log.d("Response", recipeTitle.toString())
@@ -141,12 +144,11 @@ class RecipeFragment : Fragment() {
             Toast.makeText(requireContext(), "Ingredients Added", Toast.LENGTH_LONG).show()
         }
 
+    //Validar que no esten vacios
     private fun inputCheck(ingredientName: String): Boolean{
         //Toast.makeText(requireContext(), "There are no ingredients to add", Toast.LENGTH_LONG).show()
         return !(TextUtils.isEmpty(ingredientName))
     }
-
-    //Validar que no esten vacios
 
 
 }
