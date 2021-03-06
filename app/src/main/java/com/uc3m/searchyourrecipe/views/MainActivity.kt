@@ -40,10 +40,11 @@ class MainActivity : AppCompatActivity() {
         // Pass the IDs of top-level destinations in AppBarConfiguration
         val appBarConfiguration = AppBarConfiguration(
                 topLevelDestinationIds = setOf(
-                        R.id.favRecipesFragment,
+                        R.id.userFragment,
                         R.id.searchFragment,
+                        R.id.favRecipesFragment,
                         R.id.shoppingListFragmentBis,
-                        R.id.userFragment
+
                 )
         )
 
