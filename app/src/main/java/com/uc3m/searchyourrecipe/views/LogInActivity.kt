@@ -6,9 +6,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.uc3m.searchyourrecipe.databinding.ActivityLogInBinding
 
-private lateinit var binding: ActivityLogInBinding
 
 class LogInActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityLogInBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //setContentView(R.layout.activity_log_in)

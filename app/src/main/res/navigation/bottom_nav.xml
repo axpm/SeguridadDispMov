@@ -38,12 +38,16 @@
         android:id="@+id/userFragment"
         android:name="com.uc3m.searchyourrecipe.views.UserFragment"
         android:label="User"
-        tools:layout="@layout/fragment_user"/>
+        tools:layout="@layout/fragment_user">
+        <action
+            android:id="@+id/action_userFragment_to_healthDataFragment"
+            app:destination="@id/healthDataFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/recipeFragment"
         android:name="com.uc3m.searchyourrecipe.views.RecipeFragment"
-        android:label="RecipeFragment"
+        android:label="Recipe's Details"
         tools:layout="@layout/fragment_recipe">
         <argument
             android:name="id"
@@ -65,4 +69,9 @@
             android:id="@+id/action_newIngredient_to_shoppingListFragmentBis"
             app:destination="@id/shoppingListFragmentBis" />
     </fragment>
+    <fragment
+        android:id="@+id/healthDataFragment"
+        android:name="com.uc3m.searchyourrecipe.views.HealthDataFragment"
+        android:label="Health Data"
+        tools:layout="@layout/fragment_health_data" />
 </navigation>
