@@ -2,7 +2,7 @@ package com.uc3m.searchyourrecipe.repository
 
 import androidx.lifecycle.LiveData
 import com.uc3m.searchyourrecipe.models.FavouriteRecipe
-import com.uc3m.searchyourrecipe.models.FavouriteRecipeDAO
+import com.uc3m.searchyourrecipe.database.FavouriteRecipeDAO
 
 class FavouriteRecipeRepository(private val favRecipeDAO: FavouriteRecipeDAO) {
 

@@ -1,7 +1,8 @@
-package com.uc3m.searchyourrecipe.models
+package com.uc3m.searchyourrecipe.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.uc3m.searchyourrecipe.models.FavouriteRecipe
 
 @Dao
 interface FavouriteRecipeDAO {

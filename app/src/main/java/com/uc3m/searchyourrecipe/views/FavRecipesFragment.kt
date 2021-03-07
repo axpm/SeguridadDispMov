@@ -48,7 +48,6 @@ class FavRecipesFragment : Fragment() {
                     binding.iconNoRecipesFaved.visibility = View.VISIBLE
                 }
 
-
             }
 
 

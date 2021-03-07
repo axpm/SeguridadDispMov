@@ -2,7 +2,7 @@ package com.uc3m.searchyourrecipe.repository
 
 import androidx.lifecycle.LiveData
 import com.uc3m.searchyourrecipe.models.ShoppingListItem
-import com.uc3m.searchyourrecipe.models.ShoppingListItemDAO
+import com.uc3m.searchyourrecipe.database.ShoppingListItemDAO
 
 class ShoppingListItemRepository(private val shopppingListItemDAO: ShoppingListItemDAO){
     //Visualizar los ingredientes de la shoppinglist
