@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/favRecipesFragment"
         android:name="com.uc3m.searchyourrecipe.views.FavRecipesFragment"
-        android:label="Favorites Recipes"
+        android:label="My Recipes"
         tools:layout="@layout/fragment_shopping_list">
         <action
             android:id="@+id/action_favRecipesFragment_to_recipeFragment"
@@ -73,5 +73,18 @@
         android:id="@+id/healthDataFragment"
         android:name="com.uc3m.searchyourrecipe.views.HealthDataFragment"
         android:label="Health Data"
-        tools:layout="@layout/fragment_health_data" />
+        tools:layout="@layout/fragment_health_data" >
+        <action
+            android:id="@+id/action_healthDataFragment_to_editHealthDataFragment"
+            app:destination="@id/editHealthDataFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editHealthDataFragment"
+        android:name="com.uc3m.searchyourrecipe.views.EditHealthDataFragment"
+        android:label="EditHealthDataFragment"
+        tools:layout="@layout/fragment_edit_health_data" >
+        <action
+            android:id="@+id/action_editHealthDataFragment_to_healthDataFragment"
+            app:destination="@id/healthDataFragment" />
+    </fragment>
 </navigation>
