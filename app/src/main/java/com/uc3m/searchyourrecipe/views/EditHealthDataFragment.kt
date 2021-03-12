@@ -5,6 +5,8 @@ import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.text.isDigitsOnly
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.security.crypto.EncryptedFile
@@ -35,6 +37,7 @@ class EditHealthDataFragment : Fragment() {
             val height = binding.heightInput.text
             val weight = binding.weightInput.text
 
+            //Comprobamos que los valores esten en el formato correcto
             if(checkValues(age, height, weight)){
                 saveHealthData(age, height, weight)
                 findNavController().navigate(R.id.action_editHealthDataFragment_to_healthDataFragment)
@@ -47,7 +50,25 @@ class EditHealthDataFragment : Fragment() {
 
 
     private fun checkValues(age: Editable?, height: Editable?, weight: Editable?): Boolean {
-        return true
+        var error: Boolean = false
+        if (age != null && height != null && weight != null) {
+            if (!(Integer.parseInt(age.toString()) > 0 && Integer.parseInt(age.toString()) < 130)) {
+                Toast.makeText(requireContext(), "Insert a correct age", Toast.LENGTH_LONG).show()
+                error = true
+            }
+            if (!(weight.toString().toFloat() > 0.0 && weight.toString().toFloat() < 400.0)) {
+                Toast.makeText(requireContext(), "Insert a correct weight", Toast.LENGTH_LONG).show()
+                error = true
+            }
+            if (!(height.toString().toFloat() > 0.0 && height.toString().toFloat() < 3.0)) {
+                Toast.makeText(requireContext(), "Insert a correct height", Toast.LENGTH_LONG).show()
+                error = true
+            }
+            return !error
+        }
+        Toast.makeText(requireContext(), "Fill all the fields", Toast.LENGTH_LONG).show()
+
+        return false
     }
 
     private fun saveHealthData(age: Editable?, height: Editable?, weight: Editable?) {

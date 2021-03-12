@@ -1,15 +1,16 @@
 package com.uc3m.searchyourrecipe.views
 
-import android.annotation.SuppressLint
-import android.hardware.biometrics.BiometricManager
+
+import android.content.Intent
 import androidx.biometric.BiometricPrompt;
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.biometric.BiometricManager.from
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -35,17 +36,35 @@ class UserFragment : Fragment() {
 
     }
 
+    //Al tener distintos activity, creamos esta funcion para evitar que un atacante salte el login
+    private fun checkUserLogged() {
+        userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+
+        userViewModel.readAll.observe(viewLifecycleOwner, { list ->
+            run {
+                if(list.isEmpty()){
+                    startActivity(Intent(requireContext(), LogInActivity::class.java))
+
+                    // close this activity
+                    (activity as MainActivity).finish()
+                }else{
+                    binding.privateButton.setOnClickListener {
+                        configureBiometric()
+                        biometricPrompt.authenticate(promptInfo)
+                    }
+
+                    showDataUser(binding)
+                }
+            }
+        })
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         binding = FragmentUserBinding.inflate(inflater, container, false)
         val view = binding.root
-
-        binding.privateButton.setOnClickListener {
-            configureBiometric()
-            biometricPrompt.authenticate(promptInfo)
-        }
-
-        showDataUser(binding)
+        //Comprobamos que el usuario este loggeado por seguridad
+        checkUserLogged()
 
         return view
     }

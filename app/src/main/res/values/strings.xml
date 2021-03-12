@@ -14,5 +14,10 @@
     <string name="visit_web">VISIT WEB</string>
     <string name="ingredients_title_recipe">INGREDIENTS</string>
     <string name="health_stats_title_recipe">HEALTH STATS</string>
+    <string name="imc">IMC:</string>
+    <string name="edit_health_data">edit</string>
+    <string name="age_health_data">Age:</string>
+    <string name="weight_health_data">Weight:</string>
+    <string name="height_health_data">Height:</string>
 
 </resources>
