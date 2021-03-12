@@ -55,7 +55,7 @@ class UserFragment : Fragment() {
 
         userViewModel.readAll.observe(viewLifecycleOwner, { list ->
             run{
-                val currentItem = list.get(0)
+                val currentItem = list[0]
                 binding.userName.text = currentItem.name
 
                 Picasso.get().load(currentItem.image).into(binding.imageUser)
