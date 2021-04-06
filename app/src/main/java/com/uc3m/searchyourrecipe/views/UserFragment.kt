@@ -4,10 +4,9 @@ package com.uc3m.searchyourrecipe.views
 import android.content.Intent
 import androidx.biometric.BiometricPrompt;
 import android.os.Bundle
+import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -30,8 +29,28 @@ class UserFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+        setHasOptionsMenu(true)
         (activity as MainActivity).hideKeyboard()
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.user_menu, menu)
+
+        val logout: MenuItem = menu.findItem(R.id.action_logout)
+
+        logout.setOnMenuItemClickListener(object: MenuItem.OnMenuItemClickListener{
+            override fun onMenuItemClick(item: MenuItem?): Boolean {
+                //Navegar al loginActivity
+                startActivity(Intent(activity, LogInActivity::class.java))
+                // close the main activity
+                activity?.finish()
+                //Eliminar al usuario de la bbdd
+                userViewModel.deleteAllUsers()
+                return false
+            }
+        })
     }
 
     //Al tener distintos activity, creamos esta funcion para evitar que un atacante salte el login
@@ -72,10 +91,12 @@ class UserFragment : Fragment() {
 
         userViewModel.readAll.observe(viewLifecycleOwner, { list ->
             run{
-                val currentItem = list[0]
-                binding.userName.text = currentItem.name
+                if (list.isNotEmpty()){
+                    val currentItem = list[0]
+                    binding.userName.text = currentItem.name
 
-                Picasso.get().load(currentItem.image).into(binding.imageUser)
+                    Picasso.get().load(currentItem.image).into(binding.imageUser)
+                }
             }
         })
     }

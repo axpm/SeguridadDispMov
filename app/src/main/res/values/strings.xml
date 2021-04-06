@@ -19,5 +19,6 @@
     <string name="age_health_data">Age:</string>
     <string name="weight_health_data">Weight:</string>
     <string name="height_health_data">Height:</string>
+    <string name="user">User</string>
 
 </resources>
