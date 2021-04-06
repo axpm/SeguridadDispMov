@@ -4,8 +4,6 @@ package com.uc3m.searchyourrecipe.views
 import android.content.Intent
 import androidx.biometric.BiometricPrompt;
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
