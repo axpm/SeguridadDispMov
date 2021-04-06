@@ -5,7 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.uc3m.searchyourrecipe.models.ShoppingListItem
-import com.uc3m.searchyourrecipe.models.ShoppingListItemDatabase
+import com.uc3m.searchyourrecipe.database.ShoppingListItemDatabase
 import com.uc3m.searchyourrecipe.repository.ShoppingListItemRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

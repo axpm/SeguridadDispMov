@@ -1,9 +1,10 @@
-package com.uc3m.searchyourrecipe.models
+package com.uc3m.searchyourrecipe.database
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.uc3m.searchyourrecipe.models.FavouriteRecipe
 
 @Database(entities = [FavouriteRecipe::class], version = 1, exportSchema = false)
 abstract class FavouriteRecipeDatabase: RoomDatabase() {
@@ -14,7 +15,7 @@ abstract class FavouriteRecipeDatabase: RoomDatabase() {
         @Volatile
         private var INSTANCE: FavouriteRecipeDatabase? = null
 
-        fun getDatabase(context: Context): FavouriteRecipeDatabase{
+        fun getDatabase(context: Context): FavouriteRecipeDatabase {
             synchronized(this){
                 var instance = INSTANCE
                 if(instance == null){

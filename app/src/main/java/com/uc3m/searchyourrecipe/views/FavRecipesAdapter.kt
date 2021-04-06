@@ -37,7 +37,7 @@ class FavRecipesAdapter(private val context: Context, private val viewModel: Fav
         with(holder){
             binding.recipeName.text = currentItem.title.toString()
             binding.time.text = currentItem.time.toString() + "min"
-            Picasso.get().load(currentItem.img.toString()).into(binding.imageRecipe)
+            Picasso.get().load(currentItem.img).into(binding.imageRecipe)
 
             //Si pinchamos sobre la imagen o el nombre, accedemos a la informacion de la receta
             binding.imageRecipe.setOnClickListener {

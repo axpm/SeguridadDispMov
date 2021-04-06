@@ -1,7 +1,8 @@
-package com.uc3m.searchyourrecipe.models
+package com.uc3m.searchyourrecipe.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.uc3m.searchyourrecipe.models.ShoppingListItem
 
 @Dao
 interface ShoppingListItemDAO {
@@ -15,7 +16,7 @@ interface ShoppingListItemDAO {
 
         //Eliminar un ingrediente a la shoppinglist
         @Delete
-         fun deleteIngredient(ingredient: ShoppingListItem)
+        fun deleteIngredient(ingredient: ShoppingListItem)
 
         //Eliminar todos los ingredientes de la shoppinglist
         @Query("DELETE FROM shopping_list_item_table")
