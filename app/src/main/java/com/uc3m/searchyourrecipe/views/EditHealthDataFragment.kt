@@ -1,5 +1,6 @@
 package com.uc3m.searchyourrecipe.views
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.view.LayoutInflater
@@ -79,7 +80,8 @@ class EditHealthDataFragment : Fragment() {
         // that has the same name. Note that you cannot append to an existing file,
         // and the file name cannot contain path separators.
         val fileName = "health_data.txt"
-        val dir = "/data/data/com.uc3m.searchyourrecipe"
+        //val dir = "/data/data/com.uc3m.searchyourrecipe"
+        val dir = context?.filesDir?.path
         val file = File(dir, fileName)
         if (file.exists()){
             file.delete()

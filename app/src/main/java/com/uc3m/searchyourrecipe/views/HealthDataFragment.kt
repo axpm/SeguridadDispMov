@@ -48,7 +48,7 @@ class HealthDataFragment : Fragment() {
                 .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
                 .build()
         val fileToRead = "health_data.txt"
-        val DIRECTORY = "/data/data/com.uc3m.searchyourrecipe"
+        val DIRECTORY = context?.filesDir?.path
         if (File(DIRECTORY, fileToRead).exists()){
             val encryptedFile = EncryptedFile.Builder(
                     requireContext(),
