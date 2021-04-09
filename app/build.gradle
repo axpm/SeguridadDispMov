@@ -84,7 +84,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
 
     // Kotlin components
-    api "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2"
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2-native-mt"
     api "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1"
 
     // Room components
