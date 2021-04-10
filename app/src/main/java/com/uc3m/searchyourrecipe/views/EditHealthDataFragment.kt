@@ -1,28 +1,30 @@
 package com.uc3m.searchyourrecipe.views
 
-import android.content.Context
 import android.os.Bundle
 import android.text.Editable
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.text.isDigitsOnly
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.security.crypto.EncryptedFile
-import androidx.security.crypto.MasterKey
+import com.google.firebase.auth.FirebaseAuth
 import com.uc3m.searchyourrecipe.R
 import com.uc3m.searchyourrecipe.databinding.FragmentEditHealthDataBinding
-import java.io.File
-import java.nio.charset.StandardCharsets
+import com.uc3m.searchyourrecipe.models.User
+import com.uc3m.searchyourrecipe.viewModels.UserViewModel
 
 class EditHealthDataFragment : Fragment() {
 
     private lateinit var binding: FragmentEditHealthDataBinding
+    private lateinit var auth : FirebaseAuth
+    private lateinit var userViewModel: UserViewModel
 
      override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -37,18 +39,44 @@ class EditHealthDataFragment : Fragment() {
             val age = binding.ageInput.text
             val height = binding.heightInput.text
             val weight = binding.weightInput.text
+            lateinit var modUser: User
 
-            //Comprobamos que los valores esten en el formato correcto
+                    //Comprobamos que los valores esten en el formato correcto
             if(checkValues(age, height, weight)){
-                saveHealthData(age, height, weight)
-                findNavController().navigate(R.id.action_editHealthDataFragment_to_healthDataFragment)
+                //saveHealthData(age, height, weight)
+                auth = FirebaseAuth.getInstance()
+                userViewModel.getUser(auth.currentUser.email).observe(viewLifecycleOwner, {
+                    user ->
+                    run {
+
+                        val eAge = userViewModel.encryptData(age.toString())
+                        val encodedIVAge: String = Base64.encodeToString(eAge.first, Base64.DEFAULT)
+                        val encodedAge: String = Base64.encodeToString(eAge.second, Base64.DEFAULT)
+
+                        val eHeight = userViewModel.encryptData(height.toString())
+                        val encodedIVHeight: String = Base64.encodeToString(eHeight.first, Base64.DEFAULT)
+                        val encodedHeight: String = Base64.encodeToString(eHeight.second, Base64.DEFAULT)
+
+                        val eWeight = userViewModel.encryptData(weight.toString())
+                        val encodedIVWeight: String = Base64.encodeToString(eWeight.first, Base64.DEFAULT)
+                        val encodedWeight: String = Base64.encodeToString(eWeight.second, Base64.DEFAULT)
+
+                        modUser = User( user.email, user.name, user.image, user.ivImage,
+                                            encodedAge, encodedIVAge, encodedHeight, encodedIVHeight,
+                                            encodedWeight, encodedIVWeight)
+
+                        userViewModel.modifyUser(modUser)
+
+                        findNavController().navigate(R.id.action_editHealthDataFragment_to_healthDataFragment)
+
+                    }
+                })
             }
         }
 
 
         return view
     }
-
 
     private fun checkValues(age: Editable?, height: Editable?, weight: Editable?): Boolean {
         var error: Boolean = false
@@ -70,36 +98,6 @@ class EditHealthDataFragment : Fragment() {
         Toast.makeText(requireContext(), "Fill all the fields", Toast.LENGTH_LONG).show()
 
         return false
-    }
-
-    private fun saveHealthData(age: Editable?, height: Editable?, weight: Editable?) {
-        val mainKey = MasterKey.Builder(requireContext())
-            .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-            .build()
-        // Create a file with this name, or replace an entire existing file
-        // that has the same name. Note that you cannot append to an existing file,
-        // and the file name cannot contain path separators.
-        val fileName = "health_data.txt"
-        //val dir = "/data/data/com.uc3m.searchyourrecipe"
-        val dir = context?.filesDir?.path
-        val file = File(dir, fileName)
-        if (file.exists()){
-            file.delete()
-        }
-        val encryptedFile = EncryptedFile.Builder(
-            requireContext(),
-            file,
-            mainKey,
-            EncryptedFile.FileEncryptionScheme.AES256_GCM_HKDF_4KB
-        ).build()
-        val fileContent = ("age:"+ age.toString()+ "||" + "height:" + height.toString() + "||" + "weight:" + weight.toString())
-            .toByteArray(StandardCharsets.UTF_8)
-
-        encryptedFile.openFileOutput().apply {
-            write(fileContent)
-            flush()
-            close()
-        }
     }
 
 }

@@ -4,13 +4,14 @@ package com.uc3m.searchyourrecipe.views
 import android.content.Intent
 import androidx.biometric.BiometricPrompt;
 import android.os.Bundle
-import android.util.Log
+import android.util.Base64
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.FirebaseAuth
 import com.squareup.picasso.Picasso
 import com.uc3m.searchyourrecipe.R
 import com.uc3m.searchyourrecipe.databinding.FragmentUserBinding
@@ -24,7 +25,7 @@ class UserFragment : Fragment() {
     private lateinit var executor: Executor
     private lateinit var biometricPrompt: BiometricPrompt
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
-
+    private lateinit var auth : FirebaseAuth
     private lateinit var userViewModel: UserViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -89,16 +90,20 @@ class UserFragment : Fragment() {
     private fun showDataUser(binding: FragmentUserBinding) {
         userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
 
-        userViewModel.readAll.observe(viewLifecycleOwner, { list ->
-            run{
-                if (list.isNotEmpty()){
-                    val currentItem = list[0]
-                    binding.userName.text = currentItem.name
+        auth = FirebaseAuth.getInstance()
+        userViewModel.getUser(auth.currentUser.email).observe(viewLifecycleOwner, {
+            user ->
+            run {
+                val ivImage: ByteArray = Base64.decode(user.ivImage, Base64.DEFAULT)
+                val eImage: ByteArray = Base64.decode(user.image, Base64.DEFAULT)
+                Picasso.get().load(userViewModel.decryptData(ivImage, eImage)).into(binding.imageUser)
 
-                    Picasso.get().load(currentItem.image).into(binding.imageUser)
-                }
+                binding.userName.text = user.name
+
             }
         })
+
+
     }
 
     private fun configureBiometric() {

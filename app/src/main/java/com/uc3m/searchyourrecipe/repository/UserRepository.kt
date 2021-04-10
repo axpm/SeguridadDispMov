@@ -1,7 +1,6 @@
 package com.uc3m.searchyourrecipe.repository
 
 import androidx.lifecycle.LiveData
-
 import com.uc3m.searchyourrecipe.database.UserDAO
 import com.uc3m.searchyourrecipe.models.User
 
@@ -13,8 +12,16 @@ class UserRepository(private val userDao: UserDAO) {
         userDao.addUser(newUser)
     }
 
-    suspend fun deleteAllUsers(){
+    fun deleteAllUsers(){
         userDao.deleteAllUsers()
+    }
+
+    fun modifyUser(modifyUser: User){
+        userDao.modifyUser(modifyUser)
+    }
+
+    fun getUserByEmail(email: String): User{
+        return userDao.getUserByEmail(email)
     }
 
 }

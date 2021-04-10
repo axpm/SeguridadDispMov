@@ -4,8 +4,10 @@ package com.uc3m.searchyourrecipe.views
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.security.keystore.KeyGenParameterSpec
+import android.security.keystore.KeyProperties
+import android.util.Base64
 import android.util.Log
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -17,6 +19,7 @@ import com.uc3m.searchyourrecipe.R
 import com.uc3m.searchyourrecipe.databinding.ActivityLogInBinding
 import com.uc3m.searchyourrecipe.models.User
 import com.uc3m.searchyourrecipe.viewModels.UserViewModel
+import javax.crypto.KeyGenerator
 
 
 class LogInActivity : AppCompatActivity() {
@@ -34,19 +37,23 @@ class LogInActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         //setContentView(R.layout.activity_log_in)
 
+        //Key Generator
+        val keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore")
+        val keyGenParameterSpec = KeyGenParameterSpec
+                .Builder("MyKeyStore", KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT)
+                .setBlockModes(KeyProperties.BLOCK_MODE_CBC)
+                .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
+                .build()
+
+        keyGenerator.init(keyGenParameterSpec)
+        keyGenerator.generateKey()
+
         binding = ActivityLogInBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
 
         auth = FirebaseAuth.getInstance()
-        /* val user = auth.currentUser
-
-         if(user != null){
-             startActivity(Intent(this, MainActivity::class.java))
-             // close this activity
-             finish()
-         }*/
 
         // Configure Google Sign In
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -56,14 +63,13 @@ class LogInActivity : AppCompatActivity() {
 
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
-
         setUpButton(binding)
 
     }
 
     private fun setUpButton(binding: ActivityLogInBinding) {
         binding.button.setOnClickListener {
-            // Hacer lo del login
+            //login
             signIn()
 
         }
@@ -103,7 +109,16 @@ class LogInActivity : AppCompatActivity() {
                         Log.d("Fragment Login", "signInWithCredential:success")
                         val user = auth.currentUser
                         if(user != null){
-                            val newUser = User(user.email, user.displayName, user.photoUrl.toString())
+
+                            val eImage = userViewModel.encryptData(user.photoUrl.toString())
+                            Log.d("Encrypt", "insertDataToDatabase: $eImage")
+                            val encodedIVImage: String = Base64.encodeToString(eImage.first, Base64.DEFAULT)
+                            val encodedImage: String = Base64.encodeToString(eImage.second, Base64.DEFAULT)
+
+                            val newUser = User( user.email, user.displayName, encodedImage, encodedIVImage,
+                                            "age", null, "height", null,
+                                          "weight", null)
+
                             userViewModel.addUser(newUser)
                             startActivity(Intent(this, MainActivity::class.java))
                             // close this activity
