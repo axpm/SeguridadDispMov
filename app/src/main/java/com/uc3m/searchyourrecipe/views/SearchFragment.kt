@@ -39,9 +39,16 @@ class SearchFragment : Fragment() {
         searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
 
             override fun onQueryTextSubmit(query: String?): Boolean {
-                executeQuery(query)
-                binding.noRecipesSearched.visibility = View.GONE
-                binding.iconNoRecipesSearched.visibility = View.GONE
+                if (query != null) {
+                    if (query.length > 128){
+                        Toast.makeText(requireContext(),"Too long!! Try to be more specific", Toast.LENGTH_SHORT).show()
+                    }else{
+                        executeQuery(query)
+                        binding.noRecipesSearched.visibility = View.GONE
+                        binding.iconNoRecipesSearched.visibility = View.GONE
+                    }
+                }
+
 
                 return false
             }

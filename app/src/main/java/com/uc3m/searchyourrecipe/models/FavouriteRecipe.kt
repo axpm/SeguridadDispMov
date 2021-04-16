@@ -2,8 +2,6 @@ package com.uc3m.searchyourrecipe.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.versionedparcelable.ParcelField
-import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "favorite_recipe_table")
 data class FavouriteRecipe(

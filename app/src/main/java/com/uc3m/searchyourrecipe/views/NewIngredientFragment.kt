@@ -2,7 +2,6 @@ package com.uc3m.searchyourrecipe.views
 
 import android.content.Context
 import android.os.Bundle
-import android.text.TextUtils
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -45,22 +44,27 @@ class NewIngredientFragment : Fragment() {
         //Cogemos los datos de la interfaz
         val ingredientName = binding.nombreInput.text.toString()
 
-        //validamos que no este vacio
-        if (inputCheck(ingredientName)){
+        //validamos que no este vacio y que no pase del tamaño
+        val check = inputCheck(ingredientName)
+        if (check == 1){
             val ingredient = ShoppingListItem(ingredientName)
             shoppingListItemViewModel.addIngredient(ingredient)
             Toast.makeText(requireContext(), "Ingredient Added", Toast.LENGTH_LONG).show()
             findNavController().navigate(R.id.action_newIngredient_to_shoppingListFragmentBis)
 
-        }else{
+        }else if(check == -1){
             Toast.makeText(requireContext(), "Fill the field", Toast.LENGTH_LONG).show()
+        }else if(check == -2){
+            Toast.makeText(requireContext(), "Too long ingredient name", Toast.LENGTH_LONG).show()
         }
 
     }
 
-    //Validar que no esten vacios
-    private fun inputCheck(ingredientName: String): Boolean{
-        return !(TextUtils.isEmpty(ingredientName))
+    //Validar que no esten vacios y que no pase del tamaño
+    private fun inputCheck(ingredientName: String): Int {
+        if (ingredientName.isEmpty()) return -1
+        if (ingredientName.length > 80) return -2
+        return 1
     }
 
     override fun onAttach(context: Context) {

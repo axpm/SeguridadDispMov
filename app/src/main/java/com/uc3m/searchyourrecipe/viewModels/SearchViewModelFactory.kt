@@ -3,7 +3,6 @@ package com.uc3m.searchyourrecipe.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.uc3m.searchyourrecipe.repository.EdamamRepository
-import com.uc3m.searchyourrecipe.repository.FavouriteRecipeRepository
 
 class SearchViewModelFactory(private  val repository: EdamamRepository): ViewModelProvider.Factory {
 

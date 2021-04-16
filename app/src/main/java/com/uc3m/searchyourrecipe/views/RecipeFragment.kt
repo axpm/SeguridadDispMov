@@ -13,11 +13,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.squareup.picasso.Picasso
-import com.uc3m.searchyourrecipe.R
 import com.uc3m.searchyourrecipe.databinding.FragmentRecipeBinding
 import com.uc3m.searchyourrecipe.models.Ingredient
 import com.uc3m.searchyourrecipe.models.ShoppingListItem
@@ -25,8 +23,6 @@ import com.uc3m.searchyourrecipe.repository.EdamamRepository
 import com.uc3m.searchyourrecipe.viewModels.SearchViewModel
 import com.uc3m.searchyourrecipe.viewModels.SearchViewModelFactory
 import com.uc3m.searchyourrecipe.viewModels.ShoppingListItemViewModel
-import java.lang.Error
-
 
 class RecipeFragment : Fragment() {
 

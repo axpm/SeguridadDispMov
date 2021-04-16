@@ -23,4 +23,8 @@ class FavouriteRecipeRepository(private val favRecipeDAO: FavouriteRecipeDAO) {
     fun existsFavRecipeById(id: String): Boolean {
         return favRecipeDAO.existsFavRecipeById(id)
     }
+
+    fun deleteAllFavRecipes(){
+        return favRecipeDAO.deleteAllFavRecipes()
+    }
 }

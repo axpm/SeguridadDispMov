@@ -50,5 +50,11 @@ class FavouriteRecipeViewModel(application: Application): AndroidViewModel(appli
         return result
     }
 
+    fun deleteAllFavRecipes(){
+        viewModelScope.launch(Dispatchers.IO){
+            repository.deleteAllFavRecipes()
+        }
+    }
+
 
 }

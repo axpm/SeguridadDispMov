@@ -24,4 +24,9 @@ interface FavouriteRecipeDAO {
 
     @Delete
     fun removeFavRecipe(favRecipe: FavouriteRecipe)
+
+    //Eliminar todas las recetas favoritas
+    @Query("DELETE FROM favorite_recipe_table")
+    fun deleteAllFavRecipes()
+
 }

@@ -1,6 +1,5 @@
 package com.uc3m.searchyourrecipe.views
 
-
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*

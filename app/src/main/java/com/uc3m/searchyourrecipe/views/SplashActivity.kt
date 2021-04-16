@@ -7,7 +7,6 @@ import android.os.Handler
 import android.os.Looper
 import androidx.lifecycle.ViewModelProvider
 import com.uc3m.searchyourrecipe.R
-import com.uc3m.searchyourrecipe.viewModels.ShoppingListItemViewModel
 import com.uc3m.searchyourrecipe.viewModels.UserViewModel
 
 class SplashActivity : AppCompatActivity() {

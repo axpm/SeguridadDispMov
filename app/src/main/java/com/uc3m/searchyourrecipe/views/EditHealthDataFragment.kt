@@ -80,8 +80,8 @@ class EditHealthDataFragment : Fragment() {
 
     private fun checkValues(age: Editable?, height: Editable?, weight: Editable?): Boolean {
         var error: Boolean = false
-        if (age != null && height != null && weight != null) {
-            if (!(Integer.parseInt(age.toString()) > 0 && Integer.parseInt(age.toString()) < 130)) {
+        if (age != null && height != null && weight != null && age.isNotEmpty() && height.isNotEmpty() && weight.isNotEmpty()) {
+            if (!(Integer.parseInt(age.toString()) in 1..129)) {
                 Toast.makeText(requireContext(), "Insert a correct age", Toast.LENGTH_LONG).show()
                 error = true
             }

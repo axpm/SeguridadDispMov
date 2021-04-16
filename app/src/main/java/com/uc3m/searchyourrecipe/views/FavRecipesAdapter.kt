@@ -5,7 +5,6 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -13,7 +12,6 @@ import com.squareup.picasso.Picasso
 import com.uc3m.searchyourrecipe.R
 import com.uc3m.searchyourrecipe.databinding.RecyclerViewRecipeItemBinding
 import com.uc3m.searchyourrecipe.models.FavouriteRecipe
-import com.uc3m.searchyourrecipe.models.Recipe
 import com.uc3m.searchyourrecipe.viewModels.FavouriteRecipeViewModel
 
 
