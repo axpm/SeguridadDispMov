@@ -12,16 +12,16 @@ class SearchViewModel(private  val repository: EdamamRepository): ViewModel() {
     val myResponse: MutableLiveData<Response<EdamamRecipe>> = MutableLiveData()
     val getResponse: MutableLiveData<Response<List<Recipe>>> = MutableLiveData()
 
-    fun searchRecipe(query: String) {
+    fun searchRecipe(query: String, app_id: String, app_key: String) {
         viewModelScope.launch {
-            val response = repository.searchRecipe(query);
+            val response = repository.searchRecipe(query, app_id, app_key);
             myResponse.value = response
         }
     }
 
-    fun getRecipe(uri: String) {
+    fun getRecipe(uri: String, app_id: String, app_key: String) {
         viewModelScope.launch {
-            val response = repository.getRecipe(uri);
+            val response = repository.getRecipe(uri, app_id, app_key);
             getResponse.value = response
         }
     }

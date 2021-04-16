@@ -6,16 +6,17 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.squareup.picasso.Picasso
+import com.uc3m.searchyourrecipe.BuildConfig
 import com.uc3m.searchyourrecipe.databinding.FragmentRecipeBinding
 import com.uc3m.searchyourrecipe.models.Ingredient
 import com.uc3m.searchyourrecipe.models.ShoppingListItem
@@ -36,8 +37,8 @@ class RecipeFragment : Fragment() {
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentRecipeBinding.inflate(inflater, container, false)
@@ -78,34 +79,42 @@ class RecipeFragment : Fragment() {
 
             val edamamRepository = EdamamRepository()
             val searchViewModelFactory = SearchViewModelFactory(edamamRepository)
-            val searchViewModel = ViewModelProvider(this, searchViewModelFactory).get(SearchViewModel::class.java)
-            searchViewModel.getRecipe(uriRecipe)
+            val searchViewModel = ViewModelProvider(this, searchViewModelFactory).get(
+                SearchViewModel::class.java
+            )
+
+            val app_id: String = BuildConfig.API_ID
+            val app_key: String = BuildConfig.API_KEY
+
+            searchViewModel.getRecipe(uriRecipe, app_id, app_key)
 
             searchViewModel.getResponse.observe(viewLifecycleOwner, Observer { response ->
-                if (response.isSuccessful){
+                if (response.isSuccessful) {
                     val recipe = response.body()?.get(0)
                     // Rellenar información
                     if (recipe != null) {
                         binding.title.text = recipe.title
                         Picasso.get().load(recipe.img).into(binding.imageView)
-                        binding.webRecipe.setOnClickListener{
+                        binding.webRecipe.setOnClickListener {
                             val openURL = Intent(Intent.ACTION_VIEW)
                             openURL.data = Uri.parse(recipe.url)
                             startActivity(openURL)
                         }
                         adapter.setData(recipe.ingredients)
-                        binding.ingredientsButton.setOnClickListener{
+                        binding.ingredientsButton.setOnClickListener {
                             insertDataToDatabase(recipe.ingredients)
                         }
                     }
 
                     //Log.d("Response", recipeTitle.toString())
 
-                }else{
+                } else {
                     Log.d("Response", response.errorBody().toString())
 
-                    Toast.makeText(requireContext(),"Something went wrong",
-                            Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(), "Something went wrong",
+                        Toast.LENGTH_SHORT
+                    ).show()
 
                     title.text = "Error"
 

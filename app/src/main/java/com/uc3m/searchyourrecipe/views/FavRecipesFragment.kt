@@ -33,7 +33,6 @@ class FavRecipesFragment : Fragment() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-
         favRecipesViewModel.readAll.observe(viewLifecycleOwner, {
             favRecipe ->
             run {

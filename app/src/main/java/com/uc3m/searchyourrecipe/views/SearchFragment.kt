@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.uc3m.searchyourrecipe.BuildConfig
 import com.uc3m.searchyourrecipe.R
 import com.uc3m.searchyourrecipe.databinding.FragmentSearchBinding
 import com.uc3m.searchyourrecipe.models.Hit
@@ -103,7 +104,11 @@ class SearchFragment : Fragment() {
         val searchViewModel = ViewModelProvider(this, searchViewModelFactory).get(SearchViewModel::class.java)
 
         if (query != null) {
-            searchViewModel.searchRecipe(query)
+
+            val app_id: String = BuildConfig.API_ID
+            val app_key: String = BuildConfig.API_KEY
+
+            searchViewModel.searchRecipe(query, app_id, app_key)
         }
 
         val adapter = SearchAdapter(favRecipesViewModel, viewLifecycleOwner)

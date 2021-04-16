@@ -7,12 +7,12 @@ import retrofit2.Response
 
 class EdamamRepository {
 
-    suspend fun searchRecipe(query: String): Response<EdamamRecipe>{
-        return RetroFitInstance.edamamAPI.searchRecipe(query)
+    suspend fun searchRecipe(query: String, app_id: String, app_key: String): Response<EdamamRecipe>{
+        return RetroFitInstance.edamamAPI.searchRecipe(query, app_id, app_key)
     }
 
-    suspend fun getRecipe(uri: String): Response<List<Recipe>>{
-        return RetroFitInstance.edamamAPI.getRecipe(uri)
+    suspend fun getRecipe(uri: String, app_id: String, app_key: String): Response<List<Recipe>>{
+        return RetroFitInstance.edamamAPI.getRecipe(uri, app_id, app_key)
     }
 
 }
