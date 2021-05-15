@@ -85,7 +85,7 @@ dependencies {
 
     // Kotlin component
     api "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2-native-mt"
-    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.3-native-mt"
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0"
 
 
     // Room components
@@ -104,7 +104,7 @@ dependencies {
 
     // Coroutines
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2-native-mt'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
 
     // Picasso --> para mostrar imágenes
